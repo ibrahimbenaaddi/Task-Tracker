@@ -7,7 +7,7 @@ function handleInput(string $value, int $range)
 {
     try {
         if (empty($value)) {
-            throw new Exception('Plz choise from the menu 1~>6');
+            throw new Exception("Plz choise from the menu 1~>$range");
         }
         if (!is_numeric($value)) {
             throw new Exception('Plz enter an integer');
