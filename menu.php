@@ -93,7 +93,7 @@ function main(): void
 
         $choice = askTheUser($range);
 
-        if ($choice === 6) {
+        if ($choice === 7) {
             break;
         }
         handleChoice($choice);
