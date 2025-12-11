@@ -1,4 +1,7 @@
 <?php
+if(!file_exists("./database.json")){
+    touch("database.json");
+}
 echo "*************************************\n";
 echo "*****Welcome*To*Task*Tracker*CLI*****\n";
 echo "*************************************\n";
