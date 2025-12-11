@@ -1,33 +1,27 @@
 <?php
 /* 
     1-list all task
-    2 -filter by todo / in-progress / done 
+    2 -filter by todo / in-progress / done
 */
-require_once "task.php";
-
-use App\task;
-
-$data = json_decode(file_get_contents("../database.json"), true);
-
-function costumeString(string $string, int $length): string
+// we use customeString function to make description same size for view
+function customeString(string $string, int $length): string
 {
-    return $length < 20 ? $string . "..." : substr($string, 0, - ($length - 20)) . "...";
+    return $length <= 20 ? $string . "..." : substr($string, 0, - ($length - 20)) . "...";
 }
 
-
-function listTasks(array $tasks, ?string $filterMode = null): void
+function listTasks(array $tasks, ?string $filter = null): void
 {
 
     echo " ___________________________________________________________________________________________\n";
     echo "|  id  |       descritpion       |    status    |       createdAt     |       updatedAt     |\n";
     echo "|------|-------------------------|--------------|---------------------|---------------------|\n";
     // check if the param $filteMode ara Passed
-    if (is_null($filterMode)) {
+    if (is_null($filter)) {
         foreach ($tasks as $task) {
             printf(
                 "| %-4s | %-23s | %-12s | %-18s | %-18s |\n",
                 $task['id'],
-                costumeString($task['description'], strlen($task['description'])),
+                customeString($task['description'], strlen($task['description'])),
                 $task['status'],
                 $task['createdAt'],
                 $task['updatedAt']
@@ -35,11 +29,11 @@ function listTasks(array $tasks, ?string $filterMode = null): void
         }
     } else {
         foreach ($tasks as $task) {
-            if ($task['status'] == $filterMode) {
+            if ($task['status'] == $filter) {
                 printf(
                     "| %-4s | %-23s | %-12s | %-18s | %-18s |\n",
                     $task['id'],
-                    costumeString($task['description'], strlen($task['description'])),
+                    customeString($task['description'], strlen($task['description'])),
                     $task['status'],
                     $task['createdAt'],
                     $task['updatedAt']
@@ -47,11 +41,19 @@ function listTasks(array $tasks, ?string $filterMode = null): void
             }
         }
     }
-    echo "|______|_________________________|______________|_____________________|_____________________|\n";
+    echo "|______|_________________________|______________|_____________________|_____________________|\n\n";
 }
-function filterBytodo(array $tasks): void
+
+function mainlist(?string $filterMode = null): void
 {
-    echo "The tasks filtred by todo\n";
-    listTasks($tasks,"todo");
+    try {
+        $path = __DIR__  . "/../database.json";
+        $data = json_decode(file_get_contents($path), true);
+        if (empty($data)) {
+            throw new Exception("No data Found");
+        }
+        listTasks($data,$filterMode);
+    } catch (Exception $err) {
+        echo $err->getMessage();
+    }
 }
-filterBytodo($data);
