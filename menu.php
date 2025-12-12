@@ -1,6 +1,6 @@
 <?php
-if (!file_exists("./database.json")) {
-    file_put_contents("database.json", json_encode([]));
+if (!file_exists("./App/Service/database.json")) {
+    touch("database.json");
 }
 
 require_once "./App/handler.php";
@@ -40,16 +40,16 @@ class Menu extends TaskController
         switch ($mode) {
             case $mode === 1:
                 self::index();
-                break;
+                return;
             case $mode === 2:
                 self::showByStatus("todo");
-                break;
+                return;
             case $mode === 3:
                 self::showByStatus("in-progress");
-                break;
+                return;
             case $mode === 4:
                 self::showByStatus("done");
-                break;
+                return;
         }
     }
     private static function handleChoice(int $choice)
@@ -57,7 +57,7 @@ class Menu extends TaskController
         switch ($choice) {
             case $choice === 1:
                 self::filterTask();
-                break;
+                return;
             case $choice === 2:
                 while (true) {
                     try {
@@ -65,12 +65,40 @@ class Menu extends TaskController
                         $id = trim(fgets(STDIN));
                         $id = self::isNumber($id);
                         self::showByID($id);
-                        break;
+                        return;
                     } catch (Exception $err) {
+                        self::errorLog($err->getMessage());
                         echo "\n" . $err->getMessage() . "\n\n";
                     }
                 }
-                break;    
+            case $choice === 3:
+                while (true) {
+                    try {
+                        echo "\nNow you can Add your task : ";
+                        $description = trim(fgets(STDIN));
+                        if (empty($description)) throw new Exception("Plz insert a task to Add");
+                        $task = self::storeTask($description);
+                        self::showByID($task['id']);
+                        return;
+                    } catch (Exception $err) {
+                        self::errorLog($err->getMessage());
+                        echo "\n" . $err->getMessage() . "\n\n";
+                    }
+                }
+            case $choice === 6:
+                while (true) {
+                    echo "\nAre you sure Want to delete All your Task yes/no : ";
+                    $answer = trim(fgets(STDIN));
+                    if (strtolower($answer) === "yes") {
+                        self::deleteAll();
+                        return;
+                    }
+
+                    if (strtolower($answer) === "no") {
+                        return;
+                    }
+                    echo "\nAnswer By yes/no\n\n";
+                }
         }
     }
     public static function main(): void

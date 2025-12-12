@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Controller;
 
 require_once __DIR__ . "/../View/view.php";
-require_once __DIR__ ."/../Service/dataService.php";
+require_once __DIR__ . "/../Service/dataService.php";
 
 
 use App\View\View;
