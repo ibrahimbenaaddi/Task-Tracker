@@ -3,25 +3,28 @@ require_once "./App/list.php";
 
 // build functions for handleinput and user choices
 // i use the range for more dynamic for update in future
+function isNumber(mixed $value): int
+{
+    if (!filter_var($value, FILTER_VALIDATE_INT)) {
+        throw new Exception('Plz enter an integer');
+    }
+    $value = (int) $value;
+    return $value;
+}
+
 function handleInput(string $value, int $range)
 {
     try {
         if (empty($value)) {
-            throw new Exception("Plz choise from the menu 1~>$range");
+            throw new Exception("Plz choice from the menu 1~>$range");
         }
-        if (!is_numeric($value)) {
-            throw new Exception('Plz enter an integer');
+        $number =  isNumber($value);
+        if ($number < 1 || $number > $range) {
+            throw new Exception("Plz choice from the range 1~>$range");
         }
-        if (!filter_var($value, FILTER_VALIDATE_INT)) {
-            throw new Exception('Plz enter an integer');
-        }
-        $value = (int) $value;
-        if ($value < 1 || $value > $range) {
-            throw new Exception("Plz choise from the range 1~>$range");
-        }
-        return $value;
+        return $number;
     } catch (Exception $err) {
-        echo $err->getMessage() . "\n";
+        echo "\n" . $err->getMessage() . "\n";
         return false;
     }
 }
@@ -29,7 +32,7 @@ function handleInput(string $value, int $range)
 function askTheUser(int $range): int
 {
     while (true) {
-        echo "\nplz enter your choise 1~>$range : ";
+        echo "\nplz enter your choice 1~>$range : ";
         $choice = trim(fgets(STDIN));
         $choice = handleInput($choice, $range);
         if ($choice) {
@@ -69,7 +72,20 @@ function handleChoice(int $choice)
         mainlist(filterTask());
         return;
     }
-
+    if ($choice === 2) {
+        while (true) {
+            try {
+                echo "Plz enter the ID of task : ";
+                $id = trim(fgets(STDIN));
+                $id = isNumber($id);
+                mainlist(null, $id);
+                break;
+            } catch (Exception $err) {
+                echo "\n" . $err->getMessage() . "\n\n";
+            }
+        }
+        return;
+    }
 }
 
 function main(): void
@@ -96,6 +112,7 @@ function main(): void
         if ($choice === 7) {
             break;
         }
+
         handleChoice($choice);
     }
 }
