@@ -3,6 +3,7 @@ require_once "./App/list.php";
 
 // build functions for handleinput and user choices
 // i use the range for more dynamic for update in future
+
 function isNumber(mixed $value): int
 {
     if (!filter_var($value, FILTER_VALIDATE_INT)) {
@@ -51,7 +52,7 @@ function filterTask()
     echo "4->done\n";
 
     $mode = askTheUser($range);
-
+//   use switch casw
     if ($mode === 1) {
         return null;
     }

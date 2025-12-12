@@ -1,8 +1,8 @@
 <?php
 
-namespace App;
+namespace App\Model;
 
-class task
+class Task
 {
     private int $id;
     private string $description;
