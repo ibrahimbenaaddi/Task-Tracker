@@ -16,7 +16,7 @@ trait View
     }
 
     // Show Tasks
-    public function showTasks(array $tasks): void
+    public static function showTasks(array $tasks): void
     {
         echo self::Thead;
         foreach ($tasks as $task) {
@@ -33,7 +33,7 @@ trait View
     }
 
     //find task by id
-    public function finTasks(array $task): void
+    public static function findTasks(array $task): void
     {
         echo "\nID : {$task['id']},\nDescription : {$task['description']},\nStatus : {$task['status']},\nCreatedAt : {$task['createdAt']},\nUpdatedAt : {$task['updatedAt']}\n\n";
     }
