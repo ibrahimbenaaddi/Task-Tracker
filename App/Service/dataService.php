@@ -2,15 +2,12 @@
 
 namespace App\Service;
 
-require_once __DIR__ . "/../Model/task.php";
-require_once __DIR__ . "/../Service/TaskService.php";
 
 use App\Model\Task;
 use App\Service\TaskService;
 use Exception;
-use JsonException;
 
-trait Data
+trait DataService
 {
     use TaskService;
 

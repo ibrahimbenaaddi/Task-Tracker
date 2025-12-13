@@ -3,8 +3,7 @@ if (!file_exists("./App/Service/database.json")) {
     touch("./App/Service/database.json");
 }
 
-require_once "./App/handler.php";
-require_once "./App/Controller/TaskController.php";
+require __DIR__ . '/vendor/autoload.php';
 
 use App\Handler;
 use App\Controller\TaskController;

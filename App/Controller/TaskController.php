@@ -2,17 +2,13 @@
 
 namespace App\Controller;
 
-require_once __DIR__ . "/../View/view.php";
-require_once __DIR__ . "/../Service/dataService.php";
-
-
 use App\View\View;
-use App\Service\Data;
+use App\Service\DataService;
 use Exception;
 
 class TaskController
 {
-    use Data, View;
+    use DataService, View;
 
     public static function index(): void
     {

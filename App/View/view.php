@@ -2,8 +2,6 @@
 
 namespace App\View;
 
-require_once __DIR__ . "/../handler.php";
-
 use App\Handler;
 
 trait View
