@@ -1,3 +1,6 @@
-/vendor
+#composer
+/vendor/
 /composer.lock
-/vendor/composer
+#PHPunit
+/tests/_output/
+
