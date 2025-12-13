@@ -60,7 +60,7 @@ trait Data
     public static function updateTask(int $id, ?string $description = null, ?string $status = null)
     {
         $tasks = self::getData();
-        $found = false ;
+        $found = false;
         foreach ($tasks as $key => $task) {
             if ($id === $task['id']) {
 
@@ -68,6 +68,26 @@ trait Data
                 $tasks[$key]['status'] = $status ?? $tasks[$key]['status'];
                 $tasks[$key]['updatedAt'] = date("Y-m-d H:i:s");
 
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            throw new Exception("Your task that have ID : $id ,is Not Found");
+        }
+
+        file_put_contents(self::PathDB, json_encode($tasks, JSON_PRETTY_PRINT));
+    }
+
+    public static function deleteByID(int $id) 
+    {
+        $tasks = self::getData();
+        $found = false;
+        foreach ($tasks as $key => $task) {
+            if ($id === $task['id']) {
+                unset($tasks[$key]);
+                $tasks = array_values($tasks);
                 $found = true;
                 break;
             }

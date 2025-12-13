@@ -1,7 +1,6 @@
 <?php
 namespace App\View;
 
-
 trait View
 {
     private const Thead = " ___________________________________________________________________________________________\n|  id  |       descritpion       |    status    |       createdAt     |       updatedAt     |\n|------|-------------------------|--------------|---------------------|---------------------|\n";
@@ -12,7 +11,7 @@ trait View
 
     private static function customeString(string $string, int $length): string
     {
-        return $length <= 20 ? $string . "..." : substr($string, 0, - ($length - 20)) . "...";
+        return $length <= 20 ? $string : substr($string, 0, - ($length - 20)) . "...";
     }
 
     // Show Tasks
