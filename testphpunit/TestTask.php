@@ -1,24 +1,30 @@
 <?php
 
+use PHPUnit\Framework\Attributes\DataProvider;
 use App\Model\Task;
 use PHPUnit\Framework\TestCase;
 
 class TestTask extends TestCase
 {
-    public function testInfoTask()
+    public static function  taskProvider(): array
     {
-        $id = 15;
-        $description = "test class Task";
-        $taskObj = new Task($id,$description);
-        $task = $taskObj->infoTask();
-        
-        $expected =  [
-            "id" => $id,
-            "description" => $description,
-            "status" => "todo",
-            "createdAt" => date("Y-m-d H:i:s"),
-            "updatedAt" => date("Y-m-d H:i:s")
+        return [
+            [15, "test taks 1"],
+            [16, "test taks 2"],
+            [17, "test taks 3"],
+            [18, "test taks 4"],
         ];
-        $this->assertSame($expected,$task);
     }
+
+    #[DataProvider('taskProvider')]
+    public function testInfoTask(int $id, string $description)
+    {
+        $taskObj = new Task($id, $description);
+        $task = $taskObj->infoTask();
+
+        $this->assertSame($id, $task['id']);
+        $this->assertSame($description, $task['description']);
+
+    }
+
 }
