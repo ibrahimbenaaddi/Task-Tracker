@@ -52,6 +52,40 @@ class Menu extends TaskController
                 return;
         }
     }
+
+    private static function update(int $id, ?string $description = null)
+    {
+        $range = 4;
+
+        echo "\nPlz choose a number to update\n";
+        echo "1->update Task\n";
+        echo "2->start the Task (statud = in-progress)\n";
+        echo "3->update status to done\n";
+        echo "4->exit\n";
+
+        $choice = self::askTheUser($range);
+
+        switch ($choice) {
+            case $choice === 1:
+                while (true) {
+                    echo "\nEnter the new Task : ";
+                    $description = trim(fgets(STDIN));
+                    if (!empty($description)) {
+                        self::updateTask($id, $description);
+                        return;
+                    }    
+                    echo("Plz insert a task to Add");
+                }
+            case $choice === 2:
+                self::updateTask($id, null, "in-progress");
+                return;
+            case $choice === 3:
+                self::updateTask($id, null, "done");
+                return;
+            case $choice === 4:
+                return;   
+        }
+    }
     private static function handleChoice(int $choice)
     {
         switch ($choice) {
@@ -61,7 +95,7 @@ class Menu extends TaskController
             case $choice === 2:
                 while (true) {
                     try {
-                        echo "Plz enter the ID of task : ";
+                        echo "\nPlz enter the ID of task : ";
                         $id = trim(fgets(STDIN));
                         $id = self::isNumber($id);
                         self::showByID($id);
@@ -79,6 +113,19 @@ class Menu extends TaskController
                         if (empty($description)) throw new Exception("Plz insert a task to Add");
                         $task = self::storeTask($description);
                         self::showByID($task['id']);
+                        return;
+                    } catch (Exception $err) {
+                        self::errorLog($err->getMessage());
+                        echo "\n" . $err->getMessage() . "\n\n";
+                    }
+                }
+            case $choice === 4:
+                while (true) {
+                    try {
+                        echo "\nPlz enter the ID of the task that you want to Update : ";
+                        $id = trim(fgets(STDIN));
+                        $id = self::isNumber($id);
+                        self::update($id);
                         return;
                     } catch (Exception $err) {
                         self::errorLog($err->getMessage());
