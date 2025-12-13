@@ -37,6 +37,8 @@ git clone https://github.com/ibrahim5012/Task-Tracker.git
     **install composer in your machine first if you dont have it !!
 
     composer install
+
+    composer dump-autoload
 ```
 
 
