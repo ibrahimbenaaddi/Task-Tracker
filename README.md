@@ -29,7 +29,7 @@ A **simple command-line interface (CLI) application** built in **PHP** for manag
 ## Installation
 1. **Clone the repository**:  
 ```bash
-git clone https://github.com/ibrahim5012/Task-Tracker.git
+git clone https://github.com/ibrahimbenaaddi/Task-Tracker.git
 ```
 
 2. **run This Command to install composer**
